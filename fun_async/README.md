@@ -16,9 +16,11 @@ transactions, performance will suffer.
 Strategies for minimizing the delays of blocking I/O fall into three major
 categories:
 
-    1. multiprocessing
-    2. threading
-    3. asynchrony
+1. multiprocessing
+
+2. threading
+
+3. asynchrony
 
 Multiprocessing
 ===============
