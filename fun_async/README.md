@@ -16,9 +16,9 @@ transactions, performance will suffer.
 Strategies for minimizing the delays of blocking I/O fall into three major
 categories:
 
-    # multiprocessing
-    # threading
-    # asynchrony
+    1. multiprocessing
+    2. threading
+    3. asynchrony
 
 Multiprocessing
 ===============
@@ -85,23 +85,31 @@ and calls the specified awaitable.
 
 In Python 3.7, the three awaitable objects are:
 
-    # coroutine: An asyncio coroutine is any Python function whose definition is
-        prefixed with the async keyword.
-    # task: An asyncio task is an object that wraps a coroutine, providing
-        methods to control its execution, and query its status. A task may be
-        created with asyncio.create_task(), or asyncio.gather(). If you await a i
-        task, execution of the current coroutine is blocked until that task is
-        complete.
-        Tasks have several useful methods for managing the wrapped coroutine.
-        Notably, you can request that a task be canceled by calling the task's
-        .cancel() method. The task will be scheduled for cancellation on the
-        next cycle of the event loop. Cancellation is not guaranteed: the task
-        may complete before that cycle, in which case the cancellation does
-        not occur.
-    # future: An asyncio future is a low-level object that acts as a placeholder
-        for data that hasn't yet been calculated or fetched. It can provide an
-        empty structure to be filled with data later, and a callback mechanism
-        that is triggered when the data is ready.
+    1. coroutine
+
+       An asyncio coroutine is any Python function whose definition is
+       prefixed with the async keyword.
+
+    2. task 
+
+       An asyncio task is an object that wraps a coroutine, providing
+       methods to control its execution, and query its status. A task may be
+       created with asyncio.create_task(), or asyncio.gather(). If you await a i
+       task, execution of the current coroutine is blocked until that task is
+       complete.
+       Tasks have several useful methods for managing the wrapped coroutine.
+       Notably, you can request that a task be canceled by calling the task's
+       .cancel() method. The task will be scheduled for cancellation on the
+       next cycle of the event loop. Cancellation is not guaranteed: the task
+       may complete before that cycle, in which case the cancellation does
+       not occur.
+
+    3. future
+
+       An asyncio future is a low-level object that acts as a placeholder
+       for data that hasn't yet been calculated or fetched. It can provide an
+       empty structure to be filled with data later, and a callback mechanism
+       that is triggered when the data is ready.
 
 Event Loops
 -----------
@@ -111,18 +119,23 @@ at least one event loop. It's possible to have multiple event loops, but
 multiple event loops are strongly discouraged in Python 3.7. A reference to the
 currently-running loop object is obtained by calling asyncio.get_running_loop().
 
-    # Sleeping: The asyncio.sleep(delay) coroutine blocks for delay seconds.
-        It's useful for simulating blocking I/O.
-    # Initiating the Main Event Loop: The canonical entrance point to an asyncio
-        program is asyncio.run(main()), where main() is a top-level coroutine.
-        Calling asyncio.run() implicitly creates and runs an event loop. The
-        loop object has many useful methods, including loop.time(), which
-        returns a float representing the current time, as measured by the loop's
-        internal clock.
-        Note: The asyncio.run() function cannot be called from within an
-        existing event loop. Therefore, it is possible that you see errors if
-        you're running the program within a supervising environment, such as
-        Anaconda or Jupyter, which is running an event loop of its own.
+    1. Sleeping
+
+       The asyncio.sleep(delay) coroutine blocks for delay seconds.  It's useful 
+       for simulating blocking I/O.
+
+    2. Initiating the Main Event Loop
+
+       The canonical entrance point to an asyncio
+       program is asyncio.run(main()), where main() is a top-level coroutine.
+       Calling asyncio.run() implicitly creates and runs an event loop. The
+       loop object has many useful methods, including loop.time(), which
+       returns a float representing the current time, as measured by the loop's
+       internal clock.
+       Note: The asyncio.run() function cannot be called from within an
+       existing event loop. Therefore, it is possible that you see errors if
+       you're running the program within a supervising environment, such as
+       Anaconda or Jupyter, which is running an event loop of its own.
 
 Gathering Awaitables
 --------------------
@@ -135,8 +148,8 @@ immediately scheduled as a task.
 Gathering is a convenient way to schedule multiple coroutines to run
 concurrently as tasks. It also associates the gathered tasks in some useful
 ways:
-    # When all gathered tasks are complete, their aggregate return values are
-        returned as a list, ordered in accordance with the awaitables list
-        order.
-    # Any gathered task may be canceled, without canceling the other tasks.
-    # The gather itself can be cancelled, cancelling all tasks.
+    1. When all gathered tasks are complete, their aggregate return values are
+       returned as a list, ordered in accordance with the awaitables list
+       order.
+    2. Any gathered task may be canceled, without canceling the other tasks.
+    3. The gather itself can be cancelled, cancelling all tasks.
