@@ -1,0 +1,35 @@
+stages:
+  - test
+  - build
+  - docs
+
+default:
+  image: python:3.9
+  before_script:
+    - pip install tox
+
+lint:
+  stage: test
+  script:
+    - tox -e lint
+
+test:
+  stage: test
+  script:
+    - tox -e test
+
+build:
+  stage: build
+  script:
+    - python setup.py bdist_wheel
+  artifacts:
+    paths:
+      - "dist/*.whl"
+
+sphinx:
+  stage: docs
+  script:
+    - tox -e docs
+  artifacts:
+    paths:
+      - "docs/build/html/*"
